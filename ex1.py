@@ -83,6 +83,8 @@ for number_list in numbers_to_search:
     balance_points.append(max_tree_balance)
     time_taken.append(time_for_search)
 
+    
+
 
 plt.figure(figsize=(10, 6))
 plt.scatter(balance_points, time_taken, alpha=0.7, edgecolors='w', linewidth=0.5)
