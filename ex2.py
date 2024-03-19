@@ -5,7 +5,7 @@ class Node:
         self.left_child = None
         self.right_child = None
         self.data = value
-        self.balance = 0  
+        self.balance = 0
 
 class Tree:
     def __init__(self):
@@ -23,20 +23,25 @@ class Tree:
                 parent.left_child = Node(value)
             else:
                 parent.right_child = Node(value)
-            self.update_balance(parent)
+            self.update_balance(parent, True)
         else:
             if value < current.data:
                 self.place_node(current.left_child, value, current)
             else:
                 self.place_node(current.right_child, value, current)
 
-    def update_balance(self, node):
+    def update_balance(self, node, check_for_pivot=False):
         if node:
-            node.balance = self.node_height(node.left_child) - self.node_height(node.right_child)
-            if node.balance > 1 or node.balance < -1:
-                print(f"Case #2: A pivot exists, and a node was added to the shorter subtree")
+            left_height = self.node_height(node.left_child)
+            right_height = self.node_height(node.right_child)
+            node.balance = left_height - right_height
+            if check_for_pivot and abs(node.balance) >= 2:
+                
+                print("Case #3: Case 3 not supported")
+            elif node.balance > 1 or node.balance < -1:
+                print("Case #2: A pivot exists, and a node was added to the shorter subtree")
             else:
-                print(f"Case #1: Pivot not detected")
+                print("Case #1: Pivot not detected")
             self.update_balance(node.left_child)
             self.update_balance(node.right_child)
 
@@ -45,7 +50,7 @@ class Tree:
             return 0
         return 1 + max(self.node_height(node.left_child), self.node_height(node.right_child))
 
-# Test cases
+
 def test_case(tree, values, case_description):
     print(f"\n{case_description}")
     for value in values:
@@ -58,6 +63,4 @@ tree = Tree()
 test_case(tree, [10, 5], "Test Case 2: Adding a node results in case 2 (Pivot exists but node is added to the shorter subtree)")
 
 tree = Tree()
-test_case(tree, [10, 5, 15, 20], "Test Case 3: Adding a node results in case 3 (not supported)")
-
-
+test_case(tree, [10, 5, 15, 20, 25], "Test Case 3: Adding nodes results in case 3 (Case 3 not supported)")
